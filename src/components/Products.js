@@ -3,13 +3,13 @@ import Spinner from "./Spinner";
 import ProductItem from "./ProductItem";
 import PropTypes from "prop-types";
 
-function Home({ heading, parentCallback }) {
+function Products({ heading, type, parentCallback }) {
 	const [productList, setproductList] = useState([]);
 	const [loader, setLoader] = useState(true);
 
 	const fetchData = async () => {
 		try {
-			let API_URL = "http://makeup-api.herokuapp.com/api/v1/products.json";
+			let API_URL = `http://makeup-api.herokuapp.com/api/v1/products.json?product_type=${type}`;
 			parentCallback(20);
 			const response = await fetch(API_URL);
 			const data = await response.json();
@@ -25,7 +25,7 @@ function Home({ heading, parentCallback }) {
 
 	useEffect(() => {
 		fetchData();
-		//eslint-disable-line
+		// eslint-disable-line
 	}, []);
 
 	return (
@@ -45,4 +45,8 @@ function Home({ heading, parentCallback }) {
 	);
 }
 
-export default Home;
+export default Products;
+
+Products.propTypes = {
+	heading: PropTypes.string,
+};
